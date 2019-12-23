@@ -1,0 +1,43 @@
+#Bài tập 1:
+**So sánh giữa git commit -m "Message" và git commit -am "Message"**
+
+git commit -m"message": dùng để commit file sau khi dile được add bằng lệnh git add
+
+----------------------------
+#Bài tập 2:
+**Repository là gì?**
+
+Repository là kho lưu trữ project. Có 2 loại repo là local hoặc remote.
+
+----------------------------
+#Bài tập 3:
+**Các bước để push code lên repository server**
+
+Add file -> commit file -> push lên repo
+----------------------------
+
+#Bài tập 4:
+**So sánh giữa git merge và git rebase**
+ merge: Có thế quay về lịch sử của branch 
+ rebase: xoá hết lịch sử của branch và ghi đè vào commit trước -> mất code
+----------------------------
+
+#Bài 5: 
+**Pull Request là gì? Làm cách nào để tạo PR**
+
+Pull request là một yêu cầu gửi tới quản trị viên kho chứa từ xa gộp commit mới được tạo ra từ nhanh my_feature về nhánh master để các lập trình viên khác có thể pull về được.
+----------------------------
+
+#Bài tập 6:
+**Tìm hiểu cách viết markdown và đưa ra một số cú pháp trong markdown**
+
+Markdown là ngôn ngữ đánh dấu văn bản được tạo ra bởi John Gruber. Markdown sử dụng cú pháp khá đơn giản và dễ hiểu để đánh dấu văn bản và văn bản được viết bằng Markdown sẽ có thể được chuyển đổi sang HTML. Ngược lại các văn bản được viết bằng HTML cũng có thể được chuyển đổi sang Markdown.
+
+
+
+
+
+
+
+
+
