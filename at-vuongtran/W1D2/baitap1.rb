@@ -7,9 +7,10 @@ def sayDaylyReport
 	content = gets.chomp
 	puts "------------------------"
 	puts (<<~DaylyReport)
-	"Daily Report: #{Time.at(Time.now.to_i)}
+        "Daily Report: #{Time.now.strftime("%Y-%m-%d")}
 	ten: #{name}
 	Tuoi: #{age}
 	Noi dung: #{content}"
 	DaylyReport
 end
+

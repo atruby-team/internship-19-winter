@@ -5,3 +5,4 @@ puts caculator(10 , 2){|a , b| a + b}
 puts caculator(10 , 2){|a , b| a - b}
 puts caculator(10 , 2){|a , b| a * b}
 puts caculator(10 , 2){|a , b| a / b}
+
