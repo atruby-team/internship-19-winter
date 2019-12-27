@@ -15,4 +15,3 @@ elsif n >= 6
     print "D"
 else print "F"
 end  
-

@@ -8,5 +8,4 @@ array.each do |val|
         b << "odd"
     end
 end
-
 print b

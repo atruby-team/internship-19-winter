@@ -7,5 +7,3 @@
 end
 a = [1, 2, 3, 1]
 sum(a) {|s| puts s}
-
-
