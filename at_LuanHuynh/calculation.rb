@@ -1,7 +1,5 @@
-﻿def calculation(a,b)
-   
-    yield(a,b)
-    
+﻿def calculation(a,b)  
+    yield(a,b)   
 end 
 calculation(3,2) {|a, b| puts " Tong: #{a + b}"}
 calculation(3,2) {|a, b| puts "Hieu: #{a - b}"}

@@ -1,15 +1,14 @@
 def daily_report
   print "Ten: "
-  ten = gets.chomp
+  name = gets.chomp
   print "Tuoi: "
-  tuoi = gets.chomp
+  age = gets.chomp
   print "Noi dung: "
   puts"================"
-  noidung = gets.chomp
-  t = Time.now
-  puts "Daily report: #{t}"
-  puts "Ten: #{ten}"
-  puts "Tuoi: #{tuoi}"
-  puts "Noi dung: #{noidung}"
+  conten = gets.chomp
+  puts "Daily report: #{Time.now}"
+  puts "Ten: #{name}"
+  puts "Tuoi: #{age}"
+  puts "Noi dung: #{conten}"
 end
 daily_report
