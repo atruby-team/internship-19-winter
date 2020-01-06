@@ -1,26 +1,34 @@
-while true
-  score = gets.chomp.to_f
-  case score
-  when 9...10
-    puts "A"
-    break
-  when 8...9
-    puts "B"
-    break
-  when 7...8
-    puts "C"
-    break
-
-  when 6...7
-    puts "D"
-    break
-  when 0...6
-    puts "F"
-    break
-  else
-    puts "Wrong input. Input again: "
-    next
+def input
+  while true
+    begin
+      score = gets.chomp.to_f
+      if(score >= 0 && score <=10)
+        return score
+      else
+        p "Wrong input: Retry"
+        next
+      end
+    rescue
+      p "Wrong input: Retry"
+      next
+    end
   end
 end
 
+def get_classification(input)
+  case input
+  when 0...6
+    "F"
+  when 6...7
+    "D"
+  when 7...8
+    "C"
+  when 8...9
+    "B"
+  else
+    "A"
+  end
+end
 
+a = input
+p get_classification(a)

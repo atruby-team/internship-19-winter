@@ -1,2 +1,7 @@
 input = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
-input.size == input.uniq.size ? "true" : "false"
+
+def find_contain_duplicate(arr)
+  arr.size == arr.uniq.size ? true : false
+end
+
+find_contain_duplicate(input)
