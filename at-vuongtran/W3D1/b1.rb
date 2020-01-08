@@ -1,20 +1,20 @@
 class Student
-  
-  def initialized
+
+  attr_accessor :first_name, :last_name, :courses
+
+  def initialize
     @first_name = ""
     @last_name = ""
     @courses = Array.new
   end
 
-  attr_accessor :first_name, :last_name, :courses
-
   def full_name
-    p @first_name + " " + @last_name
+    @first_name + " " + @last_name
   end
 
   def add_course(subject)
     @courses ||= []
-    @courses << subject
+    @courses << subject if @courses.index(subject).nil?
   end
 
   def show
@@ -31,8 +31,8 @@ end
 student = Student.new
 student.first_name = "Kaylene" # "Kaylene"
 student.last_name = "Johnson" # "Johnson"
-student.first_name # "Kaylene"
-student.full_name # "Kaylene Johnson"
+p student.first_name # "Kaylene"
+p student.full_name # "Kaylene Johnson"
 student.add_course("Math") # "Math"
 student.show # ["Math"]
 student.add_course("Math") # false
