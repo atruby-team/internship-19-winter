@@ -2,24 +2,28 @@ class Dictionary
 
   def initialize
     @hash = Hash.new
-  end
-
-  def hash
-    @hash
+    @finds = Hash.new
   end
 
   def add(vocab, des)
-    @hash[vocab] ||= "" 
-    @hash[vocab] = des if @hash[vocab] == ""
+    @hash.store(vocab, des) if @hash[vocab].nil?
   end
 
   def lookup(vocab)
-    temp = @hash[vocab] == nil ? "Not found in dictionary" : @hash[vocab]
-    p vocab + ": " + temp
+    if @hash[vocab].nil?
+      p vocab + ": Not found in dictionary"
+      return
+    end
+    if @finds[vocab].nil?
+      @finds[vocab] = 1
+    else
+      @finds[vocab] +=1
+    end
+    p vocab + ": " + @hash[vocab]
   end
 
   def remove(vocab)
-    @hash.delete(vocab) if @hash[vocab] != nil
+    @hash.delete(vocab) if not @hash[vocab].nil?
     puts "Delete Done!"
   end
 
@@ -35,23 +39,29 @@ class Dictionary
 
   def pop
     return nil if size.zero? 
-    keys = @hash.keys
-    @hash.delete(keys[-1])
+    key_end= @hash.keys[-1]
+    value_end = @hash.delete(key_end)
+    result = { key_end => value_end }
+    result
   end
 
   def update(vocab, des)
     @hash.each { |k , v| @hash[k] = des if k == vocab }
   end
 
+  def favorite
+    max_view = @finds.values.max
+    list_views = @finds.select { | k, v | v == max_view }  #tra ve mang cac gia tri duoc tim kiem nhieu nhat
+    key_older = list_views.first[0]
+    p @hash.slice(key_older)
+  end
 end
 
 dict = Dictionary.new
-dict.add("love", "tinh yeu")
-dict.lookup("loves")
-dict.random
-dict.add("friend", "ban be")
-dict.add("friend2", "ban be")
-dict.add("friend3", "ban be")
-dict.update("friend2", "hello")
-p "_______________"
-p dict.hash
+dict.add("abc", "xyz")
+dict.add("abd", "xyz")
+dict.add("aaa", "xyz")
+dict.lookup("abc")
+dict.lookup("aaa")
+dict.lookup("aaa")
+dict.favorite

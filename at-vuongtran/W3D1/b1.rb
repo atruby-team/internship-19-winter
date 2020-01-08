@@ -13,7 +13,6 @@ class Student
   end
 
   def add_course(subject)
-    @courses ||= []
     @courses << subject if @courses.index(subject).nil?
   end
 
@@ -33,6 +32,7 @@ student.first_name = "Kaylene" # "Kaylene"
 student.last_name = "Johnson" # "Johnson"
 p student.first_name # "Kaylene"
 p student.full_name # "Kaylene Johnson"
+student.add_course("Math") # "Math"
 student.add_course("Math") # "Math"
 student.show # ["Math"]
 student.add_course("Math") # false
