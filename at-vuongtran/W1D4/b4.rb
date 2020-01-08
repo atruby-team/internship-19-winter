@@ -16,7 +16,7 @@ class StringFormat
 
   def only_letters?(string)
     return nil if !string.instance_of?(String)
-    string.each_char { | i | 
+    string.each_char do | i | 
       case i
       when 'a'..'z'
         next
@@ -25,7 +25,7 @@ class StringFormat
       else
         return false
       end
-    }
+    end
     true
   end
 
