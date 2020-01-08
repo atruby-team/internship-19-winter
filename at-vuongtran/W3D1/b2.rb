@@ -17,7 +17,7 @@ class Dictionary
     if @finds[vocab].nil?
       @finds[vocab] = 1
     else
-      @finds[vocab] +=1
+      @finds[vocab] += 1
     end
     p vocab + ": " + @hash[vocab]
   end
@@ -39,14 +39,14 @@ class Dictionary
 
   def pop
     return nil if size.zero? 
-    key_end= @hash.keys[-1]
+    key_end = @hash.keys[-1]
     value_end = @hash.delete(key_end)
     result = { key_end => value_end }
     result
   end
 
   def update(vocab, des)
-    @hash.each { |k , v| @hash[k] = des if k == vocab }
+    @hash.each { | k , v | @hash[k] = des if k == vocab }
   end
 
   def favorite
