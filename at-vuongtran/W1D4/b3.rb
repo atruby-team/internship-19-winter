@@ -5,9 +5,9 @@ class HtmlToText
   end
 
   def get_html(html)
-    html.gsub!("<div>", "")
-    html.gsub!("</div>", "/n")
-    html.gsub!("<br>", "/n")
+    html.gsub!("<div>", "\n")
+    html.gsub!("</div>", "\n")
+    html.gsub!("<br>", "\n")
     @output = html
   end
 

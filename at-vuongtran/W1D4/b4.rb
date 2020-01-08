@@ -5,13 +5,13 @@ class StringFormat
   end
 
   def human_name(name)
-    name.gsub!('_', "")
+    name.gsub!("_", "")
     temp = name.split(" ")
     @output = temp.reduce("") { |x , y| x += " " + y.capitalize }
   end
 
   def uniq(str)
-    p str.split("").uniq.join("")
+    str.split("").uniq.join("")
   end
 
   def only_letters?(string)
@@ -37,5 +37,5 @@ end
 a = StringFormat.new
 a.human_name("Tran minh_ uvong")
 a.show_view
-a.uniq("Hello world!!!")
+p a.uniq("Hello world!!!")
 p a.only_letters?("vuo1ng")
