@@ -1,23 +1,37 @@
 ﻿class Student
   attr_accessor :first_name, :last_name, :course
+
   def def initialize
     @first_name = ""
     @last_name = ""
-    @course = []
+    @courses = []
   end
+
   def full_name
     puts @first_name +" " + @last_name
   end
+
   def add_cours(course)
-    @course ||= []
-    @course << course
+    @courses ||= []
+    if @courses.index(course) == nil
+      @courses << course
+    else
+      puts "#{course} is exists"
+    end
   end
+
   def show
-    print @course
+    p @courses
   end
+
   def remove_course(course)
-    @course.delete(course)
+    if @courses.index(course) != nil
+      @courses.delete(course)
+    else 
+      puts "#{course} not exists."
+    end
   end
+
 end
 student = Student.new 
 student.first_name = "Luan"
@@ -28,6 +42,8 @@ student.full_name
 student.add_cours("Toan")
 student.add_cours("Ly")
 student.show
+student.add_cours("Ly")
+student.remove_course("Ly")
 student.remove_course("Ly")
 student.add_cours ("Programming")
 student.show
