@@ -1,30 +1,26 @@
 class Student
-
   attr_accessor :first_name, :last_name, :courses
 
   def initialize
-    @first_name = ""
-    @last_name = ""
     @courses = Array.new
   end
 
   def full_name
-    @first_name + " " + @last_name
+    first_name + " " + last_name
   end
 
   def add_course(subject)
-    @courses << subject if @courses.index(subject).nil?
+    courses << subject unless @courses.include?(subject)
   end
 
   def show
-    print @courses
+    print courses
     puts
   end
 
   def remove_course(course_name)
-    @courses.delete(course_name)
+    courses.delete(course_name)
   end
-
 end
 
 student = Student.new

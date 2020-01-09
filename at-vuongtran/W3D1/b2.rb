@@ -1,5 +1,4 @@
 class Dictionary
-
   def initialize
     @hash = Hash.new
     @finds = Hash.new
