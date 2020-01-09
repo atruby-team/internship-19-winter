@@ -4,19 +4,23 @@
   
   def initialize
     @hash = Hash.new
+    @count =Hash.new
   end
 
   def add(vocab,desc) 
     if @hash[vocab].nil?
       @hash[vocab] = desc
+      @count[vocab] = 0
     end
   end
 
   def lookup(vocab) 
     if  @hash[vocab] != nil
       p @hash[vocab]
+      @count[vocab] += 1
     else 
       p "#{vocab} not found"
+      @count[vocab] = 1
     end
   end
 
@@ -56,7 +60,8 @@
     p h_random
   end
 
-  def favorite()
+  def favorite
+    p @count.max_by{ |k, v| v}
   end
 
 end
@@ -70,6 +75,9 @@ dic.remove("sleep") #"removed sleep"
 dic.remove("sleep") #"sleep not found"
 p dic.hash
 dic.lookup("hello") #"xin chao"
+dic.lookup("eat") #"xin chao"
+dic.lookup("eat") #"xin chao"
+dic.favorite
 dic.size #"total vocabulary: 3"
 dic.update("good bye", "Chao tam biet") #"updated good bye"
 p dic.hash
