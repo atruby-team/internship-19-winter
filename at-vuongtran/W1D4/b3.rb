@@ -1,10 +1,8 @@
 class HtmlToText
-
-  def initialized
-    @output = ""
-  end
+  def initialize; end
 
   def get_html(html)
+    html.gsub!("<div>", "") if html.index("<div>").zero? 
     html.gsub!("<div>", "\n")
     html.gsub!("</div>", "\n")
     html.gsub!("<br>", "\n")

@@ -1,13 +1,11 @@
 class StringFormat
-  
-  def initialize
-    @output =""      
-  end
+  def initialize; end
 
   def human_name(name)
-    name.gsub!("_", "")
-    temp = name.split(" ")
-    @output = temp.reduce("") { |x , y| x += " " + y.capitalize }
+    name.gsub!("_", " ")
+    temp = name.split
+    temp.map! { |item| item.capitalize }
+    @output = temp.join(" ")
   end
 
   def uniq(str)
@@ -15,18 +13,7 @@ class StringFormat
   end
 
   def only_letters?(string)
-    return nil if !string.instance_of?(String)
-    string.each_char do | i | 
-      case i
-      when 'a'..'z'
-        next
-      when  'A'..'Z'
-        next
-      else
-        return false
-      end
-    end
-    true
+    /[^a-z A-Z]/.match(string).nil? 
   end
 
   def show_view
@@ -35,7 +22,7 @@ class StringFormat
 end
 
 a = StringFormat.new
-a.human_name("Tran minh_ uvong")
+a.human_name("Tran minh_     _vuong")
 a.show_view
 p a.uniq("Hello world!!!")
-p a.only_letters?("vuo1ng")
+p a.only_letters?("Vuo ng#")
