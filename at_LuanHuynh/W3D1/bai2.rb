@@ -1,5 +1,4 @@
 ﻿class Dictionary
-  attr_accessor :vocab, :desc
   attr_reader :hash
   
   def initialize
@@ -20,7 +19,6 @@
       @count[vocab] += 1
     else 
       p "#{vocab} not found"
-      @count[vocab] = 1
     end
   end
 
@@ -61,7 +59,7 @@
   end
 
   def favorite
-    p @count.max_by{ |k, v| v}
+    p vocab_favorite = @count.max_by{ |k, v| v }.values_at(0)  
   end
 
 end
@@ -77,6 +75,7 @@ p dic.hash
 dic.lookup("hello") #"xin chao"
 dic.lookup("eat") #"xin chao"
 dic.lookup("eat") #"xin chao"
+dic.lookup("hello") #"xin chao"
 dic.favorite
 dic.size #"total vocabulary: 3"
 dic.update("good bye", "Chao tam biet") #"updated good bye"

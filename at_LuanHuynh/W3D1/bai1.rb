@@ -1,10 +1,6 @@
 ﻿class Student
   attr_accessor :first_name, :last_name,
 
-  def def initialize
-    @courses = []
-  end
-
   def full_name
     puts @first_name + " " + @last_name
   end
