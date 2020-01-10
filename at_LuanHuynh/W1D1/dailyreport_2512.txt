@@ -1,3 +1,0 @@
-#Daily report 25/12
-
-Today, I learned about Ruby (Array, Hash, DateTime, Yield) and basic HTML and CSS. 
