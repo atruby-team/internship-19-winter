@@ -1,11 +1,10 @@
 class News
-
   attr_accessor :tittle, :content
 
   def initialize(id, tittle, content, tmp)
     @id = id
     @tittle = tittle
-    @content = content    
+    @content = content
   end
 
   def self.update(news, tittle, content)
@@ -14,47 +13,49 @@ class News
   end
 
   def delete(news)
+    list_new.delete(news)
   end
 end
 
 class BbcNews < News
+  attr_accessor :list_new
 
   def initialize(id, tittle, content, category)
     super
     @category = category
+    @@list_new ||= []
+    @@list_new << self
   end
 
+  def delete(news)
+
+  end
 end
 
 class CnnNews < News
-
   def initialize(id, tittle, content, publication_date)
     super
     @publication_date = publication_date
+    @@list_new ||= []
+    @@list_new << self
   end
 
 end
 
 class User
-
-  attr_accessor :name, :id, :friends
+  attr_accessor :name, :id, :friends, :replace_name
 
   def initialize(id , name)
     @id = id
     @name = name
+    @replace_name = "#{name}(#{id})"
     @friends = Array.new
     @subscribe_list = Array.new
     @conventation = Array.new
   end
 
   def friends=(user)
-    find_name = @friends.find { | item | item[0].name == user.name }
-    if find_name.nil?
-      replace_name = user.name + "(" + String(user.id) + ")" 
-    else
-      replace_name = user.name
-    end
-    @friends << [user, replace_name]
+    friends << user
   end
 
   def conventation=(hash)
@@ -62,21 +63,15 @@ class User
   end
   
   def add_friend(user)
-    temp = @friends.find { | item | item[0] == user }
-    if temp.nil?
-      find_name = @friends.find { | item | item[0].name == user.name }
-      if find_name.nil?
-        replace_name = user.name + "(" + String(user.id) + ")" 
-      else
-        replace_name = user.name
-      end
-      @friends << [user, replace_name]
+    unless friends.include?(user)
+      friends << user
       user.friends = self;
     end
   end
 
   def unfriend(user)
-    @friends.delete(user)
+    friends.delete(user)
+    user.friends.delete(self)
   end
 
   def subscribe(news)
@@ -91,18 +86,30 @@ class User
     print @subscribe_list
   end
 
-  def friends
-    list_names = @friends.map { | item | item[1] }
+  def name
+    @name
+  end
+
+  def friends_list
+    list_names = []
+    hash = {}
+    friends.each do |item|
+      if hash[item.name].nil?
+        hash[item.name] = 1
+      else
+        hash[item.name] += 1
+      end
+      list_names << item.name 
+    end
+    list_names.each_with_index do |value, index|
+      next if hash[value] == 1
+      list_names[index] = friends[index].replace_name
+    end
     p list_names
   end
 
-  def is_friend(user)
-    tmp = @friends.find { | item | item[0] == user }
-    tmp.nil? ? nil : tmp[1]
-  end
-
   def send_message(friend, message)
-    unless is_friend(friend).nil?
+    if friends.include?(friend)
       messenger = [self, friend, message]
       @conventation << messenger
       friend.conventation = [self, friend, message]
@@ -110,18 +117,27 @@ class User
   end
 
   def conversation(friend)
-    arr = @conventation.select { |item | item[0] == friend || item[1] == friend }
+    unless friends.include?(friend)
+      p []
+      return
+    end
+    arr = @conventation.select { |item | item[0] == friend && item[1] == self || item[1] == friend && item[0] == self }
     result = arr.map { | item | [item[0].name , item[2]] }
     p result
   end
   
+  def show_news(news_channel)
+    if @subscribe_list.include?(news_channel)
+      if news_channel.list_new.size > 10
+        print news_channel.list_new.slice(-10, 10)
+      else
+        print news_channel.list_new
+      end
+    else
+      puts "channel is empty!"
+    end
+  end
 end
-
-
-
-
-
-
 
 bbc_news_01 = BbcNews.new(01, "BBC first news", "Hello world from BBC", "Say hello")
 bbc_news_02 = BbcNews.new(02, "BBC second news", "Hello Ruby from BBC", "Say hello")
@@ -158,13 +174,13 @@ second_user.add_friend(third_user)
 
 third_user.unfriend(first_user)
 
-first_user.friends # ["Smith"]
-second_user.friends # ["Bob(01)", "Bob(03)"]
-third_user.friends # ["Smith"]
+first_user.friends_list # ["Smith"]
+second_user.friends_list # ["Bob(01)", "Bob(03)"]
+third_user.friends_list # ["Smith"]
 
-first_user.send_message(second_user, "Hello!")
+first_user.send_message(second_user, "Hello!aa")
 second_user.send_message(first_user, "Hi! what's up?")
-first_user.send_message(second_user, "I just came to say hello.")
+first_user.send_message(second_user, "I just came to say hello. sss")
 second_user.send_message(first_user, "...")
 
 second_user.conversation(first_user)
@@ -175,6 +191,6 @@ second_user.conversation(first_user)
 	
 first_user.send_message(third_user, "Hello!")
 first_user.send_message(third_user, "I just came to say hello.")
-	
+first_user.friends_list
 first_user.conversation(third_user) # []
 third_user.conversation(first_user) # []
