@@ -34,7 +34,7 @@ arr.add(3)
 arr.add(4)
 arr.add(5)
 arr.add(6)
-brr = arr.select { |item| item.odd? }
+brr = arr.select(&:odd?)
 crr = arr.map { |item| item ** 2 }
 print brr
 puts
