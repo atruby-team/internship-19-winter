@@ -1,5 +1,6 @@
 class News
   attr_accessor :tittle, :content
+  @@list_new = []
 
   def initialize(id, tittle, content, tmp)
     @id = id
@@ -12,8 +13,9 @@ class News
     news.content = content
   end
 
-  def delete(news)
-    list_new.delete(news)
+  def self.delete(news)
+    @@list_new.delete(news)
+    p "delete ok"
   end
 end
 
@@ -23,12 +25,7 @@ class BbcNews < News
   def initialize(id, tittle, content, category)
     super
     @category = category
-    @@list_new ||= []
     @@list_new << self
-  end
-
-  def delete(news)
-
   end
 end
 
@@ -36,40 +33,34 @@ class CnnNews < News
   def initialize(id, tittle, content, publication_date)
     super
     @publication_date = publication_date
-    @@list_new ||= []
     @@list_new << self
   end
-
 end
 
 class User
-  attr_accessor :name, :id, :friends, :replace_name
+  attr_accessor :name, :id, :friends, :replace_name, :conventation, :list_names
 
   def initialize(id , name)
     @id = id
     @name = name
     @replace_name = "#{name}(#{id})"
-    @friends = Array.new
-    @subscribe_list = Array.new
-    @conventation = Array.new
-  end
-
-  def friends=(user)
-    friends << user
-  end
-
-  def conventation=(hash)
-    @conventation << hash
+    @friends = []
+    @subscribe_list = []
+    @conventation = []
   end
   
   def add_friend(user)
     unless friends.include?(user)
       friends << user
-      user.friends = self;
+      user.friends << self;
     end
   end
 
   def unfriend(user)
+    index_tmp = friends.index(user)
+    list_names.delete_at(index_tmp) if index_tmp.nil?
+    index_tmp2 = user.friends.index(self)
+    user.list_names.delete_at(index_tmp2) if index_tmp2.nil?
     friends.delete(user)
     user.friends.delete(self)
   end
@@ -84,6 +75,7 @@ class User
 
   def subscription_list
     print @subscribe_list
+    puts
   end
 
   def name
@@ -112,7 +104,7 @@ class User
     if friends.include?(friend)
       messenger = [self, friend, message]
       @conventation << messenger
-      friend.conventation = [self, friend, message]
+      friend.conventation << [self, friend, message]
     end
   end
 
@@ -148,10 +140,10 @@ cnn_news_02 = CnnNews.new(02, "CNN second news", "Hello Ruby from CNN", "06/07/2
 cnn_news_03 = CnnNews.new(02, "CNN third news", "Hello AsianTech from CNN", "06/07/2018")
 
 BbcNews.update(bbc_news_02, "BBC second news!", "Hello Ruby from Asiantech")
-# BbcNews.delete(bbc_news_01)
+BbcNews.delete(bbc_news_01)
 
 CnnNews.update(cnn_news_02, "CNN second news!", "Hello Ruby from Asiantech")
-# CnnNews.delete(cnn_news_03)
+CnnNews.delete(cnn_news_03)
 
 first_user = User.new(01, "Bob")
 second_user = User.new(02, "Smith")
