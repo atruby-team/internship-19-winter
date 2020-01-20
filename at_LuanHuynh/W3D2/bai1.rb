@@ -78,7 +78,6 @@ class Users
   end
 
   def show_news(organisation) #don't finish
-
   end
 
   def add_friend(user)
@@ -117,6 +116,3 @@ third_user.subscription_list
 # first_user.list_news(BbcNews)
 first_user.add_friend(second_user)
 first_user.add_friend(second_user)
-
-
-
