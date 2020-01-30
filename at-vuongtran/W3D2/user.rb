@@ -1,41 +1,5 @@
-class News
-  attr_accessor :tittle, :content
-  @@list_new = []
-
-  def initialize(id, tittle, content, tmp)
-    @id = id
-    @tittle = tittle
-    @content = content
-  end
-
-  def self.update(news, tittle, content)
-    news.tittle = tittle
-    news.content = content
-  end
-
-  def self.delete(news)
-    @@list_new.delete(news)
-    p "delete ok"
-  end
-end
-
-class BbcNews < News
-  attr_accessor :list_new
-
-  def initialize(id, tittle, content, category)
-    super
-    @category = category
-    @@list_new << self
-  end
-end
-
-class CnnNews < News
-  def initialize(id, tittle, content, publication_date)
-    super
-    @publication_date = publication_date
-    @@list_new << self
-  end
-end
+require_relative 'bbc_news'
+require_relative 'cnn_news'
 
 class User
   attr_accessor :name, :id, :friends, :replace_name, :conventation, :list_names
@@ -183,6 +147,5 @@ second_user.conversation(first_user)
 	
 first_user.send_message(third_user, "Hello!")
 first_user.send_message(third_user, "I just came to say hello.")
-first_user.friends_list
 first_user.conversation(third_user) # []
 third_user.conversation(first_user) # []
