@@ -1,3 +1,4 @@
+# Create method operator returns a lambda or proc to save: add, sub, multi and div(check div by zero) many numbers.
 def add_number(a, b, *n)
   proc = Proc.new { a + b + n.sum }
   proc
