@@ -1,3 +1,4 @@
+# Create a class ArrayClone to clone array. The class has some: length, map, add, select
 class ArrayClone
   def initialize
     @array = Array.new
