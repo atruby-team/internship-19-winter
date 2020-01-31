@@ -2,10 +2,26 @@ class HtmlToText
   def initialize; end
 
   def get_html(html)
-    html.gsub!("<div>", "") if html.index("<div>").zero? 
-    html.gsub!("<div>", "\n")
-    html.gsub!("</div>", "\n")
-    html.gsub!("<br>", "\n")
+    index_div = 0
+    stack = []
+    i = 0
+    flag = false
+    while i < html.size - 3 do
+      if html[i..(i + 3)] == '<br>'
+        html[i..(i + 3)] = "\n"
+        flag = false
+      elsif html[i..(i + 4)] == '<div>'
+        stack << '<div>'
+        html[i..(i + 4)] = flag ? "\n" : ""
+        flag = true
+      elsif html[i..(i + 5)] == '</div>'
+        html[i..(i + 5)] = flag && stack.pop == '<div>' ? "\n" : ""
+        flag = false
+      else
+        flag = true
+      end
+      i += 1
+    end
     @output = html
   end
 
