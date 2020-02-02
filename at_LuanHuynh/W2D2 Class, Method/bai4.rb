@@ -1,7 +1,7 @@
 ﻿class StringFormat
-
+  
   def human_name(name)
-    name.gsub!("_", "")
+    name.gsub!(/_/, " ")
     name_split = name.split(" ")
     name_split.map! { |item| item.capitalize }
     name_split.join(" ")
@@ -23,10 +23,10 @@
       false
     end       
   end
- 
+
 end
 
 human = StringFormat.new 
-p human.human_name("luan _huynh")
+p human.human_name("luan_huynh")
 human.uniq("Hello world!!!")
 p human.only_letters?("abx")

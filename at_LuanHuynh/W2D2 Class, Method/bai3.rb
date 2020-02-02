@@ -9,8 +9,7 @@
 
   def show_view
     puts @html_change
-  end
-  
+  end 
 end
 
 input = HtmlToGet.new

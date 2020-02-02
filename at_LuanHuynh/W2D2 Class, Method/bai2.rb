@@ -1,5 +1,4 @@
 ﻿class Array
-
   def sum
     a = 0
     each do |i|
