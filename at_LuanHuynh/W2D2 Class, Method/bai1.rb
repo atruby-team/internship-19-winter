@@ -16,6 +16,6 @@
   end
 end
 
-p non_repeat("asiantech")
+p non_repeat("atsiantech")
 p non_repeat("rubyteam")
 p non_repeat("")
