@@ -1,10 +1,10 @@
 ﻿def add(a, b, *c)
-  proc = Proc.new { a + b + c.sum}
+  proc = Proc.new { a + b + c.sum }
   proc.call
 end
 
 def sub(a, b, *c)
-  proc = Proc.new { a - b - c.sum}
+  proc = Proc.new { a - b - c.sum }
   proc.call
 end
 
@@ -31,4 +31,3 @@ p sub(13, 5, 2)
 p multi(1, 2, 3, 4)
 p div(100, 5, 10)
 p div(10, 0)
-
