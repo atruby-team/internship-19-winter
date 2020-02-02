@@ -14,14 +14,14 @@
   end 
   
   def only_letters?(string)
-    option = ["1", "2" ,"3", "4", "5", "6", "7", "8", "9"]
-    string.each_char do |item| 
-      if  option.include?(item) == false
-        return true  
-      end
-      
-       
-    end
+    s = string.match /[^a-z]/
+    if string == ""
+      nil
+    elsif  s == nil
+      true 
+    else
+      false
+    end       
   end
  
 end
@@ -29,4 +29,4 @@ end
 human = StringFormat.new 
 p human.human_name("luan _huynh")
 human.uniq("Hello world!!!")
-p human.only_letters?("qw1")
+p human.only_letters?("abx")
