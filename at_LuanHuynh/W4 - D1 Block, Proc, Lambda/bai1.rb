@@ -9,15 +9,16 @@ def sub(a, b, *c)
 end
 
 def multi(a, b, *c)
-  proc = Proc.new { a * b * c.reduce{ |s, c| s *= c }}
+  #proc = Proc.new { a * b * c.reduce { |s, c| s *= c }}
+  proc = Proc.new { a * b * c.reduce(:*) }
   proc.call
 end
 
 def div(a, b, *c)
   proc = Proc.new do 
-    if b != 0 && c.reduce{ |s, c| s *= c } != 0
-      a / b / c.reduce{ |s, c| s *= c }
-    elsif b != 0 && c.reduce{ |s, c| s *= c } == nil
+    if b != 0 && c.reduce(:*) != 0
+      a / b / c.reduce(:*)
+    elsif b != 0 && c.reduce(:*) == nil
       a / b
     else
       'can not div by zero'
