@@ -8,7 +8,7 @@ def multi_more(x)
   multi
 end
 
-def add_multi(x,y) end
+def add_multi(x,y); end
 
 add4 = add_more(4)
 p add4.(5)
