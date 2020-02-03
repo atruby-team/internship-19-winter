@@ -1,5 +1,4 @@
 ﻿class HtmlToGet
-  
   def get_html(html)
     html.gsub!("<div>", "\n")
     html.gsub!("</div>", "\n")
