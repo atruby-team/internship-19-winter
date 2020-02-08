@@ -1,6 +1,6 @@
 require 'mysql2'
 
-p connect = Mysql2::Client.new(host: 'localhost', username: 'minhvuong', password: 'qwertyuiop')
+connect = Mysql2::Client.new(host: 'localhost', username: 'minhvuong', password: 'qwertyuiop')
 
 create_db = 'CREATE DATABASE IF NOT EXISTS MANAGER_EMPLOYEE'
 create_team = 'CREATE TABLE IF NOT EXISTS `MANAGER_EMPLOYEE`.`team` (
@@ -33,9 +33,10 @@ create_leave = 'CREATE TABLE IF NOT EXISTS `MANAGER_EMPLOYEE`.`leave` (
 	`publish_date` TIMESTAMP NOT NULL,
 	PRIMARY KEY (`id`));'
 
-	p connect.query(create_db)
+	connect.query(create_db)
 	connect.select_db('MANAGER_EMPLOYEE')
 	connect.query(create_team)
 	connect.query(create_employee)
 	connect.query(create_notification)
 	connect.query(create_leave)
+	connect.close
