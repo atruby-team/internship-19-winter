@@ -41,7 +41,7 @@ def screen1 role
       x = root_menu
       case x
       when 1
-        screen_team
+        screen_team_of_root
       when 2
         screen_leave
       when 3
@@ -81,7 +81,7 @@ def screen1 role
   end
 end
 
-def screen_team
+def screen_team_of_root
   system('clear')
   loop do
     x = manage_team_of_root
@@ -95,7 +95,44 @@ def screen_team
       system('clear')
       p 'Add member success'
     when 3
+      system('clear')
+      result = Team.get_all_team
+      result.each do |x|
+        p "#{x['id']}. #{x['name']}"
+      end
+      loop do
+        p 'Enter id of a team in above list:'
+        id = gets.chomp.to_i
+        break if id > 0 && id <= result.size
+        p 'wrong id'
+      end
+      TeamController.list_members(id)
+    when 5
+      p 'Logout'
+      $user = nil
+      screen1
+    when 6
+      exit!
+    else
+      p '=====>Notice! :Choose number 1-> 6'
+      break if x == 4
+    end
+  end
+end
+
+def screen_team_of_lead
+  system('clear')
+  loop do
+    x = manage_team_of_lead
+    case x
+    when 1
+      TeamController.add_member($user)
+      system('clear')
+      p 'Add member success'
+    when 2
       TeamController.members($user)
+    when 4
+      screen1 $user.role
     when 5
       p 'Logout'
       $user = nil
