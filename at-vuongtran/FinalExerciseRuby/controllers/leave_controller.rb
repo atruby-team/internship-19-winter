@@ -2,7 +2,12 @@ require_relative '../models/leave'
 require_relative '../models/employee'
 require 'pry'
 class LeaveController
-  def self.request(user)
+  def self.request id
+    system('clear')
+    Leave.new.send_request id
+  end
+
+  def self.create(user)
     system('clear')
     p '========= Create Leave Request ========='
     balance = user.leave_balance
@@ -11,8 +16,32 @@ class LeaveController
     p 'Enter total date of:'
     total = gets.chomp.to_i
     return false if balance < total
-    Leave.new.add_request(reason, total, user.id)
+    Leave.new.create_request(reason, total, user.id)
     true
+  end
+
+  def show_your_leave user
+    arr = Leave.new.get_your_leave user.id
+    system('clear')
+    arr.each_with_index do |item, index|
+      p "#{index}, #{item['id']}, #{item['reason']}, #{item['total_day_off']}, #{item['status']}, #{item['publish_date']}"
+    end
+  end
+
+  def show_your_team_leave id
+    arr = Leave.new.get_your_team_leave(id, 'approve')
+    system('clear')
+    arr.each_with_index do |item, index|
+      p "#{index}, #{item['id']}, #{item['name']}, #{item['reason']}, #{item['total_day_off']}, #{item['publish_date']}"
+    end
+  end
+
+  def show_your_team_leave_need_approve team_id
+    arr = Leave.get_your_team_leave(team_id, 'sending')
+    system('clear')
+    arr.each_with_index do |item, index|
+      p "#{index}, #{item['id']}, #{item['name']}, #{item['reason']}, #{item['total_day_off']}, #{item['publish_date']}"
+    end
   end
 
   def show(user, status)

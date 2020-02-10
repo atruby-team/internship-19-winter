@@ -4,6 +4,8 @@ require_relative './controllers/notification_controller'
 require_relative './controllers/leave_controller'
 require_relative './views/common'
 require_relative './views/root_view'
+require_relative './views/lead_view'
+require_relative './views/member_view'
 require 'pry'
 
 $user = nil
@@ -43,7 +45,7 @@ def screen1 role
       when 1
         screen_team_of_root
       when 2
-        screen_leave
+        screen_leave_of_root_and_member
       when 3
         screen_notif
       when 4
@@ -85,7 +87,7 @@ def screen1 role
       when 1
         screen_team_of_member
       when 2
-        screen_leave_of_member
+        screen_leave_of_root_and_member
       when 3
         screen_notif_of_member
       when 4
@@ -100,7 +102,8 @@ def screen1 role
     end
   end
 end
-
+# ==============================================
+# team manager of screen 1
 def screen_team_of_root
   system('clear')
   loop do
@@ -186,7 +189,8 @@ def screen_team_of_member
     end
   end
 end
-
+# ==============================================
+# notification manager of screen 1
 def screen_notif
   system('clear')
   loop do
@@ -226,18 +230,58 @@ def screen_notif
   end
 end
 
-def screen_leave
+def screen_leave_of_root_and_member
+  system('clear')
+  loop do
+    x = screen_menu_leave_for_root_and_member
+    id = nil
+    case x
+    when 1
+      system('clear')
+      if LeaveController.create($user)
+        p 'create leave request success'
+      else
+        p 'Error with total day off'
+      end
+    when 2
+      LeaveController.new.show_your_leave $user
+    when 3
+      p LeaveController.new.update($user)
+    when 4
+      system('clear')
+      if LeaveController.request(id)
+        p 'Send leave request success'
+      end
+    when 5
+      LeaveController.new.show_your_team_leave($user.team_id)
+      p '===================================='
+    when 7
+      p 'Logout'
+      $user = nil
+      screen1
+    when 8
+      exit!
+    else
+      p '=====>Notice! :Choose number 1-> 8'
+      break if x == 6
+    end
+  end
+end
+
+def screen_leave_of_lead
   system('clear')
   loop do
     p '========== Leave Management ==========='
-    p '1. Send a leave request'
-    p '2. Show list leaves request need approve(only team lead)' if $user.role == 'team_lead'
-    p '3. Approve or reject leave request(only team lead)' if $user.role == 'team_lead'
-    p '4. Update a leave request'
-    p '5. Show list of leaves of employees.'
-    p '6. Return: Go to Level 1.'
-    p '7. Logout: Go to Level 0.'
-    p '8. Exit: Shutdown program.'
+    p '1. Create a leave request'
+    p '2. Show your leave request'
+    p '3. Update your leave request'
+    p '4. Send your leave request'
+    p '5. Show list leaves request need approve(only team lead)'
+    p '6. Approve or reject leave request(only team lead)'
+    p '7. Show list of leaves of employees.'
+    p '8. Return: Go to Level 1.'
+    p '9. Logout: Go to Level 0.'
+    p '10. Exit: Shutdown program.'
     p 'Choose number:'
     x = gets.chomp.to_i
     case x
@@ -270,6 +314,7 @@ def screen_leave
     end
   end
 end
+
 # Screen level 0
 system('clear')
 screen0

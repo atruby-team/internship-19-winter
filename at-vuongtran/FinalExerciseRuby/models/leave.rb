@@ -12,17 +12,30 @@ class Leave
       database: "#{DB}")
   end
 
-  def add_request(reason, total, user_id)
+  def create_request(reason, total, user_id)
     date = DateTime.now
     d = DateTime.parse(date.to_s).to_time.strftime('%F %T')
     sql = "INSERT INTO `#{DB}`.`#{TABLE}`(id_user, reason, total_day_off, status, publish_date)
-      VALUES('#{user_id}', '#{reason}', #{total}, 'sending', '#{d}')"
+      VALUES('#{user_id}', '#{reason}', #{total}, 'non-sending', '#{d}')"
     @connect.query(sql)
   end
 
-  def get_list_lead(id_team, status)
+  def send_request(id)
+    date = DateTime.now
+    d = DateTime.parse(date.to_s).to_time.strftime('%F %T')
+    sql = "UPDATE `#{DB}`.`#{TABLE}` SET (status = 'sending',  publish_date = #{d})
+      WHERE id = #{id}"
+    @connect.query(sql)
+  end
+
+  def get_your_team_leave(team_id, status)
     sql = "SELECT *, `#{TABLE}`.id AS #{TABLE}_id  FROM `#{DB}`.`#{TABLE}` INNER JOIN `#{DB}`.`employee`
-      ON #{TABLE}.id_user = employee.id WHERE id_team = #{id_team} and status = '#{status}'"
+      ON #{TABLE}.id_user = employee.id WHERE team_id = #{team_id} and status = '#{status}'"
+    @connect.query(sql).to_a
+  end
+
+  def get_your_leave(id_user)
+    sql = "SELECT * FROM `#{DB}`.`#{TABLE}` WHERE id_user = #{id_user}"
     @connect.query(sql).to_a
   end
 
