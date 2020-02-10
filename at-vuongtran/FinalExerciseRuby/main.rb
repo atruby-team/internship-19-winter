@@ -49,7 +49,7 @@ def screen1 role
       when 4
         p 'Logout'
         $user = nil
-        screen1
+        screen1 $user.role
       when 5
         exit!
       when 6
@@ -58,16 +58,36 @@ def screen1 role
         p '=====>Notice! :Choose number 1-> 6'
       end
     end
-  else # team manager or team lead and member
+  elsif role == 2 # team manager or team lead 
     loop do
       x = screen1_for_member_lead
       case x
       when 1
-        screen_team
+        screen_team_of_lead
       when 2
-        screen_leave
+        screen_leave_of_lead
       when 3
-        screen_notif
+        screen_notif_of_lead
+      when 4
+        p 'Logout'
+        $user = nil
+        screen1
+      when 5
+        exit!
+      else
+        p '=====>Notice! :Choose number 1-> 5'
+      end
+    end
+  else
+    loop do
+      x = screen1_for_member_lead
+      case x
+      when 1
+        screen_team_of_member
+      when 2
+        screen_leave_of_member
+      when 3
+        screen_notif_of_member
       when 4
         p 'Logout'
         $user = nil
@@ -96,10 +116,11 @@ def screen_team_of_root
       p 'Add member success'
     when 3
       system('clear')
-      result = Team.get_all_team
+      result = Team.new.get_all_team
       result.each do |x|
         p "#{x['id']}. #{x['name']}"
       end
+      id = nil
       loop do
         p 'Enter id of a team in above list:'
         id = gets.chomp.to_i
@@ -142,6 +163,26 @@ def screen_team_of_lead
     else
       p '=====>Notice! :Choose number 1-> 6'
       break if x == 4
+    end
+  end
+end
+
+def screen_team_of_member
+  system('clear')
+  loop do
+    x = manage_team_of_member
+    case x
+    when 1
+      TeamController.members($user)
+    when 3
+      p 'Logout'
+      $user = nil
+      screen1
+    when 4
+      exit!
+    else
+      p '=====>Notice! :Choose number 1-> 4'
+      break if x == 2
     end
   end
 end
