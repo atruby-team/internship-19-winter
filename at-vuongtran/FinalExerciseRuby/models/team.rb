@@ -1,5 +1,4 @@
 require 'mysql2'
-require_relative '../db/migrate'
 
 class Team
 	DB = 'MANAGER_EMPLOYEE'

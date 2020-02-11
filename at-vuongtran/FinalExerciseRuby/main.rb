@@ -69,7 +69,7 @@ def screen1 role
       when 2
         screen_leave_of_lead
       when 3
-        screen_notif_of_lead
+        screen_notif
       when 4
         p 'Logout'
         $user = nil
@@ -89,7 +89,7 @@ def screen1 role
       when 2
         screen_leave_of_root_and_member
       when 3
-        screen_notif_of_member
+        screen_notif
       when 4
         p 'Logout'
         $user = nil
@@ -195,7 +195,7 @@ def screen_notif
   system('clear')
   loop do
     p '========== Notification Management ==========='
-    p '1. Send a notification(only team lead)' if $user.role == 'team_lead'
+    p '1. Send a notification(only team lead)' if $user.role == 2
     p '2. Read a notification'
     p '3. Delete a notification'
     p '4. Show list of notifications.'
@@ -210,13 +210,19 @@ def screen_notif
       system('clear')
       p 'Send notification success!'
     when 2
-      NotificationController.new.read($user)
+      puts `clear`
+      puts 'Enter id'
+      x = gets.chomp.to_i
+      NotificationController.new.read(x)
     when 3
-      NotificationController.new.delete($user)
+      puts `clear`
+      puts 'Enter id'
+      x = gets.chomp.to_i
+      NotificationController.new.delete(x)
       system('clear')
       p 'Delete notification success!'
     when 4
-      NotificationController.new.read($user)
+      NotificationController.new.notifications($user.team_id)
     when 6
       p 'Logout'
       $user = nil
