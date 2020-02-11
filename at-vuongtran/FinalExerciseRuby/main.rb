@@ -206,17 +206,17 @@ def screen_notif
     x = gets.chomp.to_i
     case x
     when 1
-      NotificationController.send($user)
+      NotificationController.new.send($user)
       system('clear')
       p 'Send notification success!'
     when 2
-      NotificationController.read($user)
+      NotificationController.new.read($user)
     when 3
-      NotificationController.delete($user)
+      NotificationController.new.delete($user)
       system('clear')
       p 'Delete notification success!'
     when 4
-      NotificationController.read($user)
+      NotificationController.new.read($user)
     when 6
       p 'Logout'
       $user = nil
@@ -249,7 +249,7 @@ def screen_leave_of_root_and_member
       p LeaveController.new.update($user)
     when 4
       system('clear')
-      if LeaveController.request(id)
+      if LeaveController.new.request(id)
         p 'Send leave request success'
       end
     when 5
@@ -287,13 +287,13 @@ def screen_leave_of_lead
     case x
     when 1
       system('clear')
-      if LeaveController.request($user)
+      if LeaveController.new.request($user)
         p 'Send leave request success'
       else
         p 'Error with total day off'
       end
     when 2
-      LeaveController.new.show($user, 'sending')
+      LeaveController.new.show_your_team_leave_need_approve($user)
       p '===================================='
     when 3
       p LeaveController.new.approve($user)

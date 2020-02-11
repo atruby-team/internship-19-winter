@@ -33,10 +33,16 @@ create_leave = 'CREATE TABLE IF NOT EXISTS `MANAGER_EMPLOYEE`.`leave` (
 	`publish_date` TIMESTAMP NOT NULL,
 	PRIMARY KEY (`id`));'
 
+add_colum = <<-SQL
+		ALTER TABLE `MANAGER_EMPLOYEE`.`notification`
+		ADD COLUMN `team_id` INT NOT NULL;
+	SQL
+
 	connect.query(create_db)
 	connect.select_db('MANAGER_EMPLOYEE')
 	connect.query(create_team)
 	connect.query(create_employee)
 	connect.query(create_notification)
 	connect.query(create_leave)
+	connect.query(add_colum)
 	connect.close

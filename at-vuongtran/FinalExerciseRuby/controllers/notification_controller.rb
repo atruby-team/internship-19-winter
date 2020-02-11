@@ -7,7 +7,7 @@ class NotificationController
     title = gets.chomp
     p 'Enter content:'
     content = gets.chomp
-    Notification.new.add_notif(title, content, user.id_team)
+    Notification.new.add_notif(title, content, user.team_id)
 	end
 	
 	def read; end

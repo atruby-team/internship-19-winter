@@ -2,7 +2,7 @@ require_relative '../models/leave'
 require_relative '../models/employee'
 require 'pry'
 class LeaveController
-  def self.request id
+  def request id
     system('clear')
     Leave.new.send_request id
   end
