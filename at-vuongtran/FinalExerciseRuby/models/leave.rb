@@ -23,8 +23,8 @@ class Leave
   def send_request(id)
     date = DateTime.now
     d = DateTime.parse(date.to_s).to_time.strftime('%F %T')
-    sql = "UPDATE `#{DB}`.`#{TABLE}` SET (status = 'sending',  publish_date = #{d})
-      WHERE id = #{id}"
+    sql = "UPDATE `#{DB}`.`#{TABLE}` SET status = 'sending', publish_date = '#{d}'
+      WHERE id = #{id};"
     @connect.query(sql)
   end
 

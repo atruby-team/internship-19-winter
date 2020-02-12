@@ -40,4 +40,18 @@ class Employee
     sql = "UPDATE `#{DB}`.`#{TABLE}` SET leave_balance = leave_balance - #{total_date_off} WHERE id = '#{id}'"
     @connect.query(sql)
 	end
+
+	def get_all
+		sql = <<-SQL
+				SELECT * FROM #{DB}.#{TABLE}
+			SQL
+		@connect.query(sql).to_a
+	end
+
+	def update_team(id_member, team_id)
+		sql = <<-SQL
+				UPDATE #{DB}.#{TABLE} SET team_id = #{team_id} WHERE id = #{id_member}
+			SQL
+		@connect.query(sql)
+	end
 end

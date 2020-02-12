@@ -114,10 +114,6 @@ def screen_team_of_root
       system('clear')
       p 'Create team success!'
     when 2
-      TeamController.add_member($user)
-      system('clear')
-      p 'Add member success'
-    when 3
       system('clear')
       result = Team.new.get_all_team
       result.each do |x|
@@ -131,15 +127,15 @@ def screen_team_of_root
         p 'wrong id'
       end
       TeamController.list_members(id)
-    when 5
+    when 4
       p 'Logout'
       $user = nil
       screen1
-    when 6
+    when 5
       exit!
     else
+      break if x == 3
       p '=====>Notice! :Choose number 1-> 6'
-      break if x == 4
     end
   end
 end
@@ -150,22 +146,20 @@ def screen_team_of_lead
     x = manage_team_of_lead
     case x
     when 1
-      TeamController.add_member($user)
       system('clear')
+      TeamController.new.add_member($user)
       p 'Add member success'
     when 2
       TeamController.members($user)
     when 4
-      screen1 $user.role
-    when 5
       p 'Logout'
       $user = nil
       screen1
-    when 6
+    when 5
       exit!
     else
-      p '=====>Notice! :Choose number 1-> 6'
-      break if x == 4
+      break if x == 3
+      p '=====>Notice! :Choose number 1-> 5'
     end
   end
 end
@@ -216,8 +210,17 @@ def screen_notif
       NotificationController.new.read(x)
     when 3
       puts `clear`
-      puts 'Enter id'
-      x = gets.chomp.to_i
+      arr = NotificationController.new.notifications($user.team_id)
+      x = nil
+      if arr.size.zero?
+        puts "Empty list to can delete"
+        next
+      end
+      loop do
+        puts 'Enter id'
+        x = gets.chomp.to_i
+        break if x > 0 && x <= arr.size
+      end
       NotificationController.new.delete(x)
       system('clear')
       p 'Delete notification success!'
@@ -244,7 +247,7 @@ def screen_leave_of_root_and_member
     case x
     when 1
       system('clear')
-      if LeaveController.create($user)
+      if LeaveController.new.create($user)
         p 'create leave request success'
       else
         p 'Error with total day off'
@@ -255,8 +258,18 @@ def screen_leave_of_root_and_member
       p LeaveController.new.update($user)
     when 4
       system('clear')
+      a = LeaveController.new
+      arr = a.show($user, 'non-sending')
+      id = 0
+      loop do
+        p "enter id: "
+        id = gets.chomp.to_i
+        break if arr.find { |item| item['id'] == id }
+      end
       if LeaveController.new.request(id)
         p 'Send leave request success'
+      else 
+        p 'Sending failed!'
       end
     when 5
       LeaveController.new.show_your_team_leave($user.team_id)
@@ -293,30 +306,47 @@ def screen_leave_of_lead
     case x
     when 1
       system('clear')
-      if LeaveController.new.request($user)
-        p 'Send leave request success'
+      if LeaveController.new.create($user)
+        p 'create leave request success'
       else
         p 'Error with total day off'
       end
     when 2
-      LeaveController.new.show_your_team_leave_need_approve($user)
-      p '===================================='
+      system('clear')
+      LeaveController.new.show_your_leave $user
     when 3
-      p LeaveController.new.approve($user)
-    when 4
+      system('clear')
       p LeaveController.new.update($user)
+    when 4
+      system('clear')
+      a = LeaveController.new
+      arr = a.show($user, 'non-sending')
+      id = 0
+      loop do
+        p "enter id: "
+        id = gets.chomp.to_i
+        break if arr.find { |item| item['id'] == id }
+      end
+      LeaveController.new.request(id)
+      p 'Send leave request success'
     when 5
+      system('clear')
+      LeaveController.new.show_your_team_leave_need_approve $user.team_id
+    when 6
+      system('clear')
+      LeaveController.new.approve $user
+    when 7
       LeaveController.new.list_of_leaves($user)
       p '===================================='
-    when 7
+    when 9
       p 'Logout'
       $user = nil
-      screen1
-    when 8
+      screen0
+    when 10
       exit!
     else
-      p '=====>Notice! :Choose number 1-> 8'
-      break if x == 6
+      break if x == 8
+      p '=====>Notice! :Choose number 1-> 10'
     end
   end
 end

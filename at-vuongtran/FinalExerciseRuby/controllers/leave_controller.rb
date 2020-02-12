@@ -7,7 +7,7 @@ class LeaveController
     Leave.new.send_request id
   end
 
-  def self.create(user)
+  def create(user)
     system('clear')
     p '========= Create Leave Request ========='
     balance = user.leave_balance
@@ -37,7 +37,7 @@ class LeaveController
   end
 
   def show_your_team_leave_need_approve team_id
-    arr = Leave.get_your_team_leave(team_id, 'sending')
+    arr = Leave.new.get_your_team_leave(team_id, 'sending')
     system('clear')
     arr.each_with_index do |item, index|
       p "#{index}, #{item['id']}, #{item['name']}, #{item['reason']}, #{item['total_day_off']}, #{item['publish_date']}"
@@ -54,18 +54,19 @@ class LeaveController
                Leave.new.get_list_employee(user.id, status)
              end
     result.each do |x|
-      p "#{x['leave_id']}. #{x['name']} : #{x['reason']}"
+      p "#{x['id']}. #{x['name']} : #{x['reason']}"
       @arr_id.push(x['leave_id'])
     end
   end
 
   def approve(user)
     id_request = 0
-    return 'No request' if show(user, 'sending').empty?
+    a = show(user, 'sending')
+    return nil if a.size.zero?
     loop do
       p 'Choose request:'
       id_request = gets.chomp.to_i
-      break if @arr_id.include? id_request
+      break if a.find { |item| item['id'] == id_request}
     end
     request = Leave.new.get_item(id_request).first
     p 'Choose 1 -> approve or 2 -> reject'

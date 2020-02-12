@@ -2,33 +2,32 @@ require_relative '../models/employee.rb'
 require_relative '../models/team.rb'
 require 'pry'
 
-class TeamController
-  def initialize
-    p '=======Create team========'
-    p 'Enter name:'
-    team_name = gets.chomp
-    # create user lead by root. after when team have many member root will set a member to lead
-    Team.new.create_team(team_name)
-  end
-  
-  def self.add_member(user)
+class TeamController  
+  def add_member(user)
+    system('clear')
+    p '=========Add Team Member========='
+    p 'List member no position:'
+    team = user.team_id
+    old_team = 0
     id_member = 0
+    member = Employee.new.get_all
     arr_id = []
-    member = Employee.new.get_employee('team_member')
-    loop do
-      system('clear')
-      p '=========Add Team Member========='
-      p 'List member no position:'
-      member.each do |x|
+    member.each do |x|
+      if x['team_id'] != team
         p "#{x['id']}. #{x['name']}"
         arr_id .push(x['id'])
       end
-      p 'Choose member:'
+    end
+    loop do
+      p 'Choose id member:'
       id_member = gets.chomp.to_i
-      break if arr_id.include? id_member
+      if arr_id.include? id_member
+        old_team = member.find {|item| item['id'] == id_member }['team_id']
+        break
+      end
     end
     Employee.new.update_team(id_member, user.team_id)
-    Team.new.update_member(user.team_id)
+    Team.new.update_team_member(old_team, user.team_id)
   end
 
   def self.members(user)
